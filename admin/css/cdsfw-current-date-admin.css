@@ -1,0 +1,19 @@
+.cdsfw_table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cdsfw_table th,
+.cdsfw_table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.cdsfw_table th {
+    background-color: #f2f2f2;
+}
+
+.cdsfw_table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

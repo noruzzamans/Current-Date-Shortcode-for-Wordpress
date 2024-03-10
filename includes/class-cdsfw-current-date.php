@@ -90,6 +90,7 @@
 			require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-cdsfw-current-date-admin.php';
 			require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-cdsfw-current-date-public.php';
 			require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-cdsfw-current-date-shortcode.php';
+			require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-cdsfw-current-date-menu.php';
 
 			$this->loader = new Cdsfw_Current_Date_Loader();
 		}
