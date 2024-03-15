@@ -47,18 +47,62 @@ class Cdsfw_Current_Date_Menu {
         );
     }
 
-    /**
-     * Callback function to render the menu page content.
-     *
-     * @since 1.0
-     */
-    public function cdsfw_current_date_settings_page_callback() {
-        // Output your page content here
-        echo '<div class="wrap">';
-        echo '<h2>Hello</h2>';
-        echo '<p>This is a custom menu page.</p>';
-        echo '</div>';
-    }
+/**
+ * Callback function to render the menu page content.
+ *
+ * @since 1.0
+ */
+public function cdsfw_current_date_settings_page_callback() {
+    ?>
+    <div class="wrap">
+        <h2><?php echo esc_html( __( 'Premade Layout', 'current-date' ) ); ?></h2>
+        <div class="cdsfw_card_container">
+            <?php
+            // Array of date formats
+            $date_formats = array(
+                'l, F jS, Y',          // Monday, March 15th, 2024
+                'D, M j, Y',           // Mon, Mar 15, 2024
+                'F j, Y',              // March 15, 2024
+                'j F Y',               // 15 March 2024
+                'M j, Y',              // Mar 15, 2024
+                'j M Y',               // 15 Mar 2024
+                'Y-M-d',               // 2024-Mar-15
+                'd F Y',               // 15 March 2024
+                'M j',                 // Mar 15
+                'F jS',                // March 15th
+                'jS M Y',              // 15th Mar 2024
+                'l, M jS, Y',          // Monday, Mar 15th, 2024
+                'D, j M Y',            // Mon, 15 Mar 2024
+                'l, j F Y',            // Monday, 15 March 2024
+                'D, M j Y',            // Mon, Mar 15 2024
+                'd/m/Y',               // 15/03/2024
+                'j.n.Y',               // 15.3.2024
+                'Y.m.d',               // 2024.03.15
+                'd-m-Y',               // 15-03-2024
+                'Y-m-d',               // 2024-03-15
+                'Y/m/d',               // 2024/03/15
+                'm/d/Y',              // 03/15/2024
+            );
+
+            // Loop through each date format and create a card for it
+            foreach ($date_formats as $format) {
+                ?>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text"><?php echo date($format); ?></p>
+                        <p class="shortcode">[current-date format='<?php echo $format; ?>']</p>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+    </div>
+    <?php
+}
+
+
+
 
     /**
      * Callback function to render the submenu page content.
