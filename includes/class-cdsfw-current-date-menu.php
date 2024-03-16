@@ -71,6 +71,7 @@ public function cdsfw_current_date_settings_page_callback() {
                 'M j',                 // Mar 15
                 'F jS',                // March 15th
                 'jS M Y',              // 15th Mar 2024
+                'jS F Y',              // 15th March 2024
                 'l, M jS, Y',          // Monday, Mar 15th, 2024
                 'D, j M Y',            // Mon, 15 Mar 2024
                 'l, j F Y',            // Monday, 15 March 2024
