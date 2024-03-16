@@ -63,6 +63,7 @@ register_deactivation_hook( __FILE__, 'cdsfw_current_date_deactivate' );
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-cdsfw-current-date.php';
+require_once plugin_dir_path( __FILE__ ) . 'elementor-addons/cdsfw-current-date-register-widget.php';
 
 /**
  * Begins execution of the plugin.
