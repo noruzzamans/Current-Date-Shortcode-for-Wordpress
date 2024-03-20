@@ -65,6 +65,12 @@ register_deactivation_hook( __FILE__, 'cdsfw_current_date_deactivate' );
 require plugin_dir_path( __FILE__ ) . 'includes/class-cdsfw-current-date.php';
 require_once plugin_dir_path( __FILE__ ) . 'elementor-addons/cdsfw-current-date-register-widget.php';
 
+
+function cdsfw_current_date_register_block() {
+    register_block_type( __DIR__ . '/build' );
+}
+add_action( 'init', 'cdsfw_current_date_register_block' );
+
 /**
  * Begins execution of the plugin.
  *
