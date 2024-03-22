@@ -2,7 +2,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 import { dateI18n } from '@wordpress/date';
 
 export default function save({ attributes }) {
-    const { blockID, dateFormat } = attributes;
+    const { blockID, dateFormat, textcolor } = attributes;
 
     const blockProps = useBlockProps.save({
         id: blockID,
@@ -13,9 +13,12 @@ export default function save({ attributes }) {
 
     return (
         <>
-            <div {...blockProps}>
-                <span>{currentDate}</span>
-            </div>
+            <span {...blockProps} style={{
+                color: textcolor,
+            }}>
+                {currentDate}
+            </span>
         </>
     );
 }
+

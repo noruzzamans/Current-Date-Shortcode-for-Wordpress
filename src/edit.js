@@ -1,11 +1,17 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { 
+    useBlockProps,
+    InspectorControls,
+    PanelColorSettings,
+    BlockControls,
+    AlignmentToolbar
+} from '@wordpress/block-editor';
 import { dateI18n } from '@wordpress/date';
 import { PanelBody, SelectControl } from '@wordpress/components'; 
 import './editor.scss';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
-    const { blockID, dateFormat } = attributes;
+    const { blockID, dateFormat, textcolor, align } = attributes;
 
     // Set blockID using clientId
     if (clientId) {
@@ -53,10 +59,35 @@ export default function Edit({ attributes, setAttributes, clientId }) {
                         ]}
                         onChange={(value) => setAttributes({ dateFormat: value })}
                     />
+                    <PanelColorSettings
+                        title={__('Color', 'current-date')}
+                        enableAlpha={true}
+                        colorSettings={[
+                            {
+                                label: __('Text Color', 'current-date'),
+                                value: textcolor,
+                                onChange: (value) => setAttributes({ textcolor: value }),
+                            },
+                        ]}
+                        colors={[
+                            { name: 'White', color: '#ffffff' },
+                            { name: 'Red', color: '#ff0000' },
+                            { name: 'Green', color: '#00ff00' },
+                            { name: 'Blue', color: '#0000ff' },
+                            { name: 'Yellow', color: '#ffff00' },
+                            { name: 'Orange', color: '#ffa500' },
+                        ]}
+                    />
                 </PanelBody>
             </InspectorControls>
+
             <div {...blockProps} id={blockID}>
-                <span>{currentDate}</span>
+                <span style={{
+                    color: textcolor,
+                    textAlign: align,
+                }}>
+                    {currentDate}
+                </span>
             </div>
         </>
     );
