@@ -67,9 +67,26 @@ require_once plugin_dir_path( __FILE__ ) . 'elementor-addons/cdsfw-current-date-
 
 
 function cdsfw_current_date_register_block() {
-    register_block_type( __DIR__ . '/build' );
+    register_block_type( __DIR__ . '/build', array(
+        'render_callback' => 'cdsfw_current_date_dynamic_render_callback',
+    ) );
 }
 add_action( 'init', 'cdsfw_current_date_register_block' );
+
+function cdsfw_current_date_dynamic_render_callback( $attributes, $content ) {
+    $fontFamily = isset($attributes['fontFamily']) ? $attributes['fontFamily'] : '';
+    if (!empty($fontFamily)) {
+        $fontFamilies = explode(',', $fontFamily);
+        foreach ($fontFamilies as $font) {
+            $encodedFontFamily = urlencode(trim($font));
+            $googleFontUrl = "https://fonts.googleapis.com/css?family=$encodedFontFamily";
+            wp_enqueue_style('smart-heading-google-font-' . sanitize_title($font), $googleFontUrl);
+        }
+    }
+
+    return $content;
+}
+
 
 /**
  * Begins execution of the plugin.

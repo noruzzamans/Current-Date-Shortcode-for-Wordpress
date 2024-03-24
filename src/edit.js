@@ -2,28 +2,50 @@ import { __ } from '@wordpress/i18n';
 import { 
     useBlockProps,
     InspectorControls,
-    PanelColorSettings,
-    BlockControls,
-    AlignmentToolbar
+    PanelColorSettings
 } from '@wordpress/block-editor';
 import { dateI18n } from '@wordpress/date';
-import { PanelBody, SelectControl } from '@wordpress/components'; 
+import { 
+    PanelBody,
+    SelectControl,
+	RangeControl,
+ } from '@wordpress/components';
+ 
+ import { useEffect } from "@wordpress/element";
+import {
+    FONT_FAMILYS,
+} from "./constants/constants";
+
 import './editor.scss';
 
-export default function Edit({ attributes, setAttributes, clientId }) {
-    const { blockID, dateFormat, textcolor, align } = attributes;
-
-    // Set blockID using clientId
-    if (clientId) {
-        setAttributes({
-            blockID: "cdsfw-current-date-" + clientId.slice(0, 8),
-        });
-    }
+export default function Edit({ attributes, setAttributes }) {
+    const { 
+        blockID,
+        dateFormat,
+        textColor,
+        fontSize,
+        letterSpacing,
+        textTransform,
+        fontFamily,
+        fontWeight,
+        lineHeight
+    } = attributes;
 
     const blockProps = useBlockProps();
 
     // Get current date based on selected format
     const currentDate = dateI18n(dateFormat);
+
+    /* set default values for the style attributes */
+    useEffect(() => {
+        if (fontFamily) {
+            const fontUrl = `https://fonts.googleapis.com/css?family=${fontFamily.replace(' ', '+')}`;
+            const linkElement = document.createElement('link');
+            linkElement.rel = 'stylesheet';
+            linkElement.href = fontUrl;
+            document.head.appendChild(linkElement);
+        }
+    }, [fontFamily]);
 
     return (
         <>
@@ -59,14 +81,19 @@ export default function Edit({ attributes, setAttributes, clientId }) {
                         ]}
                         onChange={(value) => setAttributes({ dateFormat: value })}
                     />
+                </PanelBody>
+                <PanelBody
+					title={__("Typography", "current-date")}
+                    initialOpen={false}
+				>
                     <PanelColorSettings
                         title={__('Color', 'current-date')}
                         enableAlpha={true}
                         colorSettings={[
                             {
                                 label: __('Text Color', 'current-date'),
-                                value: textcolor,
-                                onChange: (value) => setAttributes({ textcolor: value }),
+                                value: textColor,
+                                onChange: (value) => setAttributes({ textColor: value }),
                             },
                         ]}
                         colors={[
@@ -75,16 +102,81 @@ export default function Edit({ attributes, setAttributes, clientId }) {
                             { name: 'Green', color: '#00ff00' },
                             { name: 'Blue', color: '#0000ff' },
                             { name: 'Yellow', color: '#ffff00' },
-                            { name: 'Orange', color: '#ffa500' },
+                            { name: 'Black', color: '#000000' },
                         ]}
                     />
-                </PanelBody>
+					<RangeControl
+						label={__("Font Size", "current-date")}
+						value={fontSize}
+						onChange={(fontSize) => setAttributes({ fontSize })}
+						min={1}
+						max={200}
+					/>
+
+                    <SelectControl
+                        label={__("Font Family", "current-date")}
+                        options={FONT_FAMILYS}
+                        value={fontFamily}
+                        onChange={(value) => setAttributes({ fontFamily: value })}
+                    />
+
+                    <SelectControl
+                        label={__("Text Transform", "current-date")}
+                        options={[
+                            {label: __("None", "current-date"), value: "none",},
+                            {label: __("Uppercase", "current-date"),value: "uppercase",},
+                            {label: __("Lowercase", "current-date"),value: "lowercase",},
+                            {label: __("Capitalize", "current-date"), value: "capitalize",}
+                        ]}
+                        value={textTransform}
+                        onChange={(textTransform) => setAttributes({ textTransform })}
+                    />
+
+                    <SelectControl
+                        label={__("Font Weight", "ultimate-blocks")}
+                        options={[
+                            { label: __("Normal", "ultimate-blocks"), value: "normal" },
+                            { label: __("Bold", "ultimate-blocks"), value: "bold" },
+                            { label: "100", value: "100" },
+                            { label: "200", value: "200" },
+                            { label: "300", value: "300" },
+                            { label: "400", value: "400" },
+                            { label: "500", value: "500" },
+                            { label: "600", value: "600" },
+                            { label: "700", value: "700" },
+                            { label: "800", value: "800" },
+                            { label: "900", value: "900" },
+                        ]}
+                        value={fontWeight}
+                        onChange={(fontWeight) => setAttributes({ fontWeight })}
+                    />
+
+					<RangeControl
+						label={__("Letter Spacing", "current-date")}
+						value={letterSpacing}
+						onChange={(letterSpacing) => setAttributes({ letterSpacing })}
+						min={-2}
+						max={10}
+					/>
+					<RangeControl
+						label={__("Line Height", "current-date")}
+						value={lineHeight}
+						onChange={(lineHeight) => setAttributes({ lineHeight })}
+						min={10}
+						max={120}
+					/>
+				</PanelBody>
             </InspectorControls>
 
-            <div {...blockProps} id={blockID}>
+            <div {...blockProps}>
                 <span style={{
-                    color: textcolor,
-                    textAlign: align,
+                    color: textColor,
+                    fontFamily: fontFamily,
+                    fontSize: fontSize,
+                    letterSpacing:letterSpacing + "px",
+                    textTransform:textTransform,
+                    fontWeight: fontWeight,
+                    lineHeight: lineHeight + "px"
                 }}>
                     {currentDate}
                 </span>
@@ -92,6 +184,3 @@ export default function Edit({ attributes, setAttributes, clientId }) {
         </>
     );
 }
-
-
-
