@@ -1,0 +1,1 @@
+{"version":3,"file":"index.css","mappings":";;;AACA;EACI;AAAJ,C","sources":["webpack://cdsfw-current-date/./src/editor.scss"],"sourcesContent":["\r\n.Panel_Color_Settings {\r\n    padding: 16px 0 !important;\r\n}"],"names":[],"sourceRoot":""}

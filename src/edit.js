@@ -89,6 +89,7 @@ export default function Edit({ attributes, setAttributes }) {
                     <PanelColorSettings
                         title={__('Color', 'current-date')}
                         enableAlpha={true}
+                        className = 'Panel_Color_Settings'
                         colorSettings={[
                             {
                                 label: __('Text Color', 'current-date'),
