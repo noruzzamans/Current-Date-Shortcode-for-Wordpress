@@ -1,23 +1,21 @@
+import { useState, useEffect } from "@wordpress/element";
 import { __ } from '@wordpress/i18n';
+import { dateI18n } from '@wordpress/date';
 import { 
     useBlockProps,
     InspectorControls,
     PanelColorSettings
 } from '@wordpress/block-editor';
-import { dateI18n } from '@wordpress/date';
 import { 
     PanelBody,
     SelectControl,
-	RangeControl,
- } from '@wordpress/components';
- 
- import { useEffect } from "@wordpress/element";
-import {
-    FONT_FAMILYS,
-} from "./constants/constants";
+	RangeControl
+} from '@wordpress/components';
 
+
+import { FONT_FAMILYS } from "./constants/constants";
 import './editor.scss';
-
+ 
 export default function Edit({ attributes, setAttributes }) {
     const { 
         blockID,
@@ -28,13 +26,49 @@ export default function Edit({ attributes, setAttributes }) {
         textTransform,
         fontFamily,
         fontWeight,
-        lineHeight
+        lineHeight,
+        padding
     } = attributes;
 
     const blockProps = useBlockProps();
+    const [paddingLink, setPaddingLink] = useState(true);
+    const [previousPadding, setPreviousPadding] = useState(padding);
 
-    // Get current date based on selected format
-    const currentDate = dateI18n(dateFormat);
+    /** Function to update all padding values */
+    const updateAllPadding = (value) => {
+        setAttributes({
+            padding: {
+                top: value,
+                right: value,
+                bottom: value,
+                left: value
+            }
+        });
+    };
+    
+    /** Function to handle input change */
+    const handlePaddingInputChange = (e, direction) => {
+        const value = e.target.value;
+        setAttributes({ padding: { ...padding, [direction]: value } });
+        /** Update all padding values if paddingLink is true */
+        if (paddingLink) {
+            updateAllPadding(value);
+        }
+    };
+    
+    /** Function to handle paddingLink toggle */
+    const handlePaddingLinkToggle = () => {
+        if (!paddingLink) {
+            /** If paddingLink is being turned off, restore previous padding values */
+            setAttributes({ padding: previousPadding });
+        }
+        setPaddingLink(!paddingLink);
+    };
+    
+    /** Update previousPadding state when padding changes */
+    useEffect(() => {
+        setPreviousPadding(padding);
+    }, [padding]); 
 
     /* set default values for the style attributes */
     useEffect(() => {
@@ -46,6 +80,9 @@ export default function Edit({ attributes, setAttributes }) {
             document.head.appendChild(linkElement);
         }
     }, [fontFamily]);
+    
+    /** Get current date based on selected format */
+    const currentDate = dateI18n(dateFormat);
 
     return (
         <>
@@ -82,6 +119,7 @@ export default function Edit({ attributes, setAttributes }) {
                         onChange={(value) => setAttributes({ dateFormat: value })}
                     />
                 </PanelBody>
+
                 <PanelBody
 					title={__("Typography", "current-date")}
                     initialOpen={false}
@@ -167,6 +205,57 @@ export default function Edit({ attributes, setAttributes }) {
 						max={120}
 					/>
 				</PanelBody>
+
+                <PanelBody title="Spacing" initialOpen={false}>
+                    <div className="cdsfw_spacing_container">
+                        <div className="cdsfw_input_container">
+                            <div className="cdsfw_input_wrapper">
+                                <label className="cdsfw_spacing_input_label">Top</label>
+                                <input
+                                    type="number"
+                                    name="top"
+                                    value={padding.top}
+                                    onChange={(e) => handlePaddingInputChange(e, 'top')}
+                                />
+                            </div>
+                            <div className="cdsfw_input_wrapper">
+                                <label className="cdsfw_spacing_input_label">Right</label>
+                                <input
+                                    type="number"
+                                    name="right"
+                                    value={padding.right}
+                                    onChange={(e) => handlePaddingInputChange(e, 'right')}
+                                />
+                            </div>
+                            <div className="cdsfw_input_wrapper">
+                                <label className="cdsfw_spacing_input_label">Bottom</label>
+                                <input
+                                    type="number"
+                                    name="bottom"
+                                    value={padding.bottom}
+                                    onChange={(e) => handlePaddingInputChange(e, 'bottom')}
+                                />
+                            </div>
+                            <div className="cdsfw_input_wrapper">
+                                <label className="cdsfw_spacing_input_label">Left</label>
+                                <input
+                                    type="number"
+                                    name="left"
+                                    value={padding.left}
+                                    onChange={(e) => handlePaddingInputChange(e, 'left')}
+                                />
+                            </div>
+                            <div className="cdsfw_input_wrapper">
+                                <label className="cdsfw_spacing_input_label"></label>
+                                <span
+                                    className={`dashicons ${paddingLink ? 'dashicons-admin-links' : 'dashicons-editor-unlink'} ${paddingLink ? 'is-checked' : ''}`}
+                                    onClick={handlePaddingLinkToggle}
+                                >
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </PanelBody>
             </InspectorControls>
 
             <div {...blockProps}>
@@ -177,7 +266,8 @@ export default function Edit({ attributes, setAttributes }) {
                     letterSpacing:letterSpacing + "px",
                     textTransform:textTransform,
                     fontWeight: fontWeight,
-                    lineHeight: lineHeight + "px"
+                    lineHeight: lineHeight + "px",
+                    padding: `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`
                 }}>
                     {currentDate}
                 </span>

@@ -34,7 +34,16 @@ const attributes = {
     lineHeight: {
         type: "number",
         default: 24
-    }
+    },
+    padding: {
+        type: "object", 
+        default: {
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+        },
+    },
 };
 
 export default attributes;

@@ -11,7 +11,8 @@ const {
     textTransform,
     fontFamily,
     fontWeight,
-    lineHeight, 
+    lineHeight,
+    padding 
 } = attributes;
 
     const blockProps = useBlockProps.save({
@@ -31,6 +32,7 @@ const {
                     textTransform:textTransform,
                     fontWeight: fontWeight,
                     lineHeight: lineHeight + "px",
+                    padding: `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`
             }}>
                 {currentDate}
             </span>
