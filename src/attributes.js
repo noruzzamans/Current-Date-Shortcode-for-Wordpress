@@ -21,7 +21,7 @@ const attributes = {
     },
     textTransform: {
         type: "string",
-        default: "None"
+        default: "none"
     },
     fontFamily: {
         type: "string",
@@ -29,13 +29,13 @@ const attributes = {
     },
     fontWeight: {
         type: "string",
-        default: "Normal"
+        default: "normal"
     },
     lineHeight: {
         type: "number",
         default: 24
     },
-    padding: {
+    desktop_padding: {
         type: "object", 
         default: {
             top: 0,
@@ -44,6 +44,28 @@ const attributes = {
             right: 0,
         },
     },
+    tab_padding: {
+        type: "object", 
+        default: {
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+        },
+    },
+    mobile_padding: {
+        type: "object", 
+        default: {
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+        },
+    },
+    activeDevice: {
+        type: "string",
+        default: "desktop"
+    }
 };
 
 export default attributes;

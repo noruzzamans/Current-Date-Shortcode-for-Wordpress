@@ -35,7 +35,7 @@ const attributes = {
   },
   textTransform: {
     type: "string",
-    default: "None"
+    default: "none"
   },
   fontFamily: {
     type: "string",
@@ -43,13 +43,13 @@ const attributes = {
   },
   fontWeight: {
     type: "string",
-    default: "Normal"
+    default: "normal"
   },
   lineHeight: {
     type: "number",
     default: 24
   },
-  padding: {
+  desktop_padding: {
     type: "object",
     default: {
       top: 0,
@@ -57,6 +57,28 @@ const attributes = {
       left: 0,
       right: 0
     }
+  },
+  tab_padding: {
+    type: "object",
+    default: {
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0
+    }
+  },
+  mobile_padding: {
+    type: "object",
+    default: {
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0
+    }
+  },
+  activeDevice: {
+    type: "string",
+    default: "desktop"
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (attributes);
@@ -3177,36 +3199,87 @@ function Edit({
     fontFamily,
     fontWeight,
     lineHeight,
-    padding
+    desktop_padding,
+    tab_padding,
+    mobile_padding,
+    activeDevice
   } = attributes;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.useBlockProps)();
   const [paddingLink, setPaddingLink] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
-  const [previousPadding, setPreviousPadding] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(padding);
+  const [previousPadding, setPreviousPadding] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(desktop_padding);
 
   /** Function to update all padding values */
-  const updateAllPadding = value => {
-    setAttributes({
-      padding: {
-        top: value,
-        right: value,
-        bottom: value,
-        left: value
-      }
-    });
+  const updateAllPadding = (value, device) => {
+    switch (device) {
+      case 'desktop':
+        setAttributes({
+          desktop_padding: {
+            top: value,
+            right: value,
+            bottom: value,
+            left: value
+          }
+        });
+        break;
+      case 'tab':
+        setAttributes({
+          tab_padding: {
+            top: value,
+            right: value,
+            bottom: value,
+            left: value
+          }
+        });
+        break;
+      case 'mobile':
+        setAttributes({
+          mobile_padding: {
+            top: value,
+            right: value,
+            bottom: value,
+            left: value
+          }
+        });
+        break;
+      default:
+        break;
+    }
   };
 
   /** Function to handle input change */
   const handlePaddingInputChange = (e, direction) => {
     const value = e.target.value;
-    setAttributes({
-      padding: {
-        ...padding,
-        [direction]: value
-      }
-    });
+    switch (activeDevice) {
+      case 'desktop':
+        setAttributes({
+          desktop_padding: {
+            ...desktop_padding,
+            [direction]: value
+          }
+        });
+        break;
+      case 'tab':
+        setAttributes({
+          tab_padding: {
+            ...tab_padding,
+            [direction]: value
+          }
+        });
+        break;
+      case 'mobile':
+        setAttributes({
+          mobile_padding: {
+            ...mobile_padding,
+            [direction]: value
+          }
+        });
+        break;
+      default:
+        break;
+    }
     /** Update all padding values if paddingLink is true */
     if (paddingLink) {
-      updateAllPadding(value);
+      updateAllPadding(value, activeDevice);
     }
   };
 
@@ -3223,8 +3296,8 @@ function Edit({
 
   /** Update previousPadding state when padding changes */
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    setPreviousPadding(padding);
-  }, [padding]);
+    setPreviousPadding(desktop_padding);
+  }, [desktop_padding]);
 
   /* set default values for the style attributes */
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
@@ -3239,6 +3312,13 @@ function Edit({
 
   /** Get current date based on selected format */
   const currentDate = (0,_wordpress_date__WEBPACK_IMPORTED_MODULE_3__.dateI18n)(dateFormat);
+
+  /** Function to handle device click */
+  const handleDeviceClick = device => {
+    setAttributes({
+      activeDevice: device
+    });
+  };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.InspectorControls, {
     key: "controls"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
@@ -3448,6 +3528,39 @@ function Edit({
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "cdsfw_spacing_container"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "cdsfw_label_container"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "cdsfw_label_text"
+  }, "Padding"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "cdfw_responsive_devices"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    className: `cdfw_desktop_device ${activeDevice === 'desktop' ? 'active' : ''}`,
+    onClick: () => handleDeviceClick('desktop')
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+    width: "8",
+    height: "7",
+    viewBox: "0 0 8 7"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+    d: "M7.33333 0H0.666667C0.298611 0 0 0.293945 0 0.65625V5.03125C0 5.39355 0.298611 5.6875 0.666667 5.6875H3.33333L3.11111 6.34375H2.11111C1.92639 6.34375 1.77778 6.49004 1.77778 6.67188C1.77778 6.85371 1.92639 7 2.11111 7H5.88889C6.07361 7 6.22222 6.85371 6.22222 6.67188C6.22222 6.49004 6.07361 6.34375 5.88889 6.34375H4.88889L4.66667 5.6875H7.33333C7.70139 5.6875 8 5.39355 8 5.03125V0.65625C8 0.293945 7.70139 0 7.33333 0ZM7.11111 4.8125H0.888889V0.875H7.11111V4.8125Z"
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    className: `cdfw_tab_device ${activeDevice === 'tab' ? 'active' : ''}`,
+    onClick: () => handleDeviceClick('tab')
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+    width: "6",
+    height: "7",
+    viewBox: "0 0 6 7"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+    d: "M5 0H1C0.446667 0 0 0.390833 0 0.875V6.125C0 6.60917 0.446667 7 1 7H5C5.55333 7 6 6.60917 6 6.125V0.875C6 0.390833 5.55333 0 5 0ZM3.66667 6.41667H2.33333V6.125H3.66667V6.41667ZM5.41667 5.54167H0.583333V0.875H5.41667V5.54167Z"
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    className: `cdfw_mobile_device ${activeDevice === 'mobile' ? 'active' : ''}`,
+    onClick: () => handleDeviceClick('mobile')
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+    width: "4",
+    height: "7",
+    viewBox: "0 0 4 7"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+    d: "M3.33333 0H0.666667C0.297778 0 0 0.390833 0 0.875V6.125C0 6.60917 0.297778 7 0.666667 7H3.33333C3.70222 7 4 6.60917 4 6.125V0.875C4 0.390833 3.70222 0 3.33333 0ZM2.44444 6.41667H1.55556V6.125H2.44444V6.41667ZM3.61111 5.54167H0.388889V0.875H3.61111V5.54167Z"
+  }))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "cdsfw_input_container"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "cdsfw_input_wrapper"
@@ -3456,7 +3569,7 @@ function Edit({
   }, "Top"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "number",
     name: "top",
-    value: padding.top,
+    value: activeDevice === 'desktop' ? desktop_padding.top : activeDevice === 'tab' ? tab_padding.top : mobile_padding.top,
     onChange: e => handlePaddingInputChange(e, 'top')
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "cdsfw_input_wrapper"
@@ -3465,7 +3578,7 @@ function Edit({
   }, "Right"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "number",
     name: "right",
-    value: padding.right,
+    value: activeDevice === 'desktop' ? desktop_padding.right : activeDevice === 'tab' ? tab_padding.right : mobile_padding.right,
     onChange: e => handlePaddingInputChange(e, 'right')
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "cdsfw_input_wrapper"
@@ -3474,7 +3587,7 @@ function Edit({
   }, "Bottom"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "number",
     name: "bottom",
-    value: padding.bottom,
+    value: activeDevice === 'desktop' ? desktop_padding.bottom : activeDevice === 'tab' ? tab_padding.bottom : mobile_padding.bottom,
     onChange: e => handlePaddingInputChange(e, 'bottom')
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "cdsfw_input_wrapper"
@@ -3483,7 +3596,7 @@ function Edit({
   }, "Left"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "number",
     name: "left",
-    value: padding.left,
+    value: activeDevice === 'desktop' ? desktop_padding.left : activeDevice === 'tab' ? tab_padding.left : mobile_padding.left,
     onChange: e => handlePaddingInputChange(e, 'left')
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "cdsfw_input_wrapper"
@@ -3503,7 +3616,10 @@ function Edit({
       textTransform: textTransform,
       fontWeight: fontWeight,
       lineHeight: lineHeight + "px",
-      padding: `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`
+      padding: `${activeDevice === 'desktop' ? desktop_padding.top : activeDevice === 'tab' ? tab_padding.top : mobile_padding.top}px 
+                            ${activeDevice === 'desktop' ? desktop_padding.right : activeDevice === 'tab' ? tab_padding.right : mobile_padding.right}px 
+                            ${activeDevice === 'desktop' ? desktop_padding.bottom : activeDevice === 'tab' ? tab_padding.bottom : mobile_padding.bottom}px 
+                            ${activeDevice === 'desktop' ? desktop_padding.left : activeDevice === 'tab' ? tab_padding.left : mobile_padding.left}px`
     }
   }, currentDate)));
 }
@@ -3574,16 +3690,34 @@ function save({
     fontFamily,
     fontWeight,
     lineHeight,
-    padding
+    desktop_padding,
+    tab_padding,
+    mobile_padding
   } = attributes;
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
     id: blockID
   });
 
-  // Get current date based on selected format
+  /** Get current date based on selected format */
   const currentDate = (0,_wordpress_date__WEBPACK_IMPORTED_MODULE_2__.dateI18n)(dateFormat);
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+
+  // Default padding for desktop (using desktop_padding)
+  const padding = `${desktop_padding.top}px ${desktop_padding.right}px ${desktop_padding.bottom}px ${desktop_padding.left}px`;
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("style", null, `
+                    @media only screen and (max-width: 1024px) {
+                        .responsive-span {
+                            padding: ${tab_padding.top}px ${tab_padding.right}px ${tab_padding.bottom}px ${tab_padding.left}px !important;
+                        }
+                    }
+
+                    @media only screen and (max-width: 767px) {
+                        .responsive-span {
+                            padding: ${mobile_padding.top}px ${mobile_padding.right}px ${mobile_padding.bottom}px ${mobile_padding.left}px !important;
+                        }
+                    }
+                `), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     ...blockProps,
+    className: "responsive-span",
     style: {
       color: textColor,
       fontSize: fontSize,
@@ -3592,7 +3726,7 @@ function save({
       textTransform: textTransform,
       fontWeight: fontWeight,
       lineHeight: lineHeight + "px",
-      padding: `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`
+      padding
     }
   }, currentDate));
 }
