@@ -20,6 +20,7 @@ export default function Edit({ attributes, setAttributes }) {
     const { 
         blockID,
         dateFormat,
+        display,
         textColor,
         fontSize,
         letterSpacing,
@@ -133,6 +134,9 @@ export default function Edit({ attributes, setAttributes }) {
         setAttributes({ activeDevice: device });
     };
 
+    /** Default padding for desktop (using desktop_padding) */
+    const padding = `${desktop_padding.top}px ${desktop_padding.right}px ${desktop_padding.bottom}px ${desktop_padding.left}px`;
+
     return (
         <>
             <InspectorControls key="controls">
@@ -166,6 +170,16 @@ export default function Edit({ attributes, setAttributes }) {
                             { label: __('m/d/Y', 'current-date'), value: 'm/d/Y' }
                         ]}
                         onChange={(value) => setAttributes({ dateFormat: value })}
+                    />
+
+                    <SelectControl
+                        label={__('Display', 'current-date')}
+                        value={display}
+                        options={[
+                            { label: __('Inline Block', 'current-date'), value: 'inline-block' },
+                            { label: __('Block', 'current-date'), value: 'block' }
+                        ]}
+                        onChange={(value) => setAttributes({ display: value })}
                     />
                 </PanelBody>
 
@@ -322,8 +336,27 @@ export default function Edit({ attributes, setAttributes }) {
                 </PanelBody>
             </InspectorControls>
 
+
+            {/* Media queries for responsive padding */}
+            <style>
+                {`
+                    @media only screen and (max-width: 1024px) {
+                        .cdsfw_responsive {
+                            padding: ${tab_padding.top}px ${tab_padding.right}px ${tab_padding.bottom}px ${tab_padding.left}px !important;
+                        }
+                    }
+
+                    @media only screen and (max-width: 767px) {
+                        .cdsfw_responsive {
+                            padding: ${mobile_padding.top}px ${mobile_padding.right}px ${mobile_padding.bottom}px ${mobile_padding.left}px !important;
+                        }
+                    }
+                `}
+            </style>
+
             <div {...blockProps}>
-                <span  style={{
+                <span className="cdsfw_responsive"  style={{
+                    display: display,
                     color: textColor,
                     fontFamily: fontFamily,
                     fontSize: fontSize,
@@ -331,10 +364,7 @@ export default function Edit({ attributes, setAttributes }) {
                     textTransform: textTransform,
                     fontWeight: fontWeight,
                     lineHeight: lineHeight + "px",
-                    padding: `${activeDevice === 'desktop' ? desktop_padding.top : activeDevice === 'tab' ? tab_padding.top : mobile_padding.top}px 
-                            ${activeDevice === 'desktop' ? desktop_padding.right : activeDevice === 'tab' ? tab_padding.right : mobile_padding.right}px 
-                            ${activeDevice === 'desktop' ? desktop_padding.bottom : activeDevice === 'tab' ? tab_padding.bottom : mobile_padding.bottom}px 
-                            ${activeDevice === 'desktop' ? desktop_padding.left : activeDevice === 'tab' ? tab_padding.left : mobile_padding.left}px`
+                    padding,
                 }}>
                     {currentDate}
                 </span>

@@ -5,6 +5,7 @@ export default function save({ attributes }) {
     const { 
         blockID,
         dateFormat,
+        display,
         textColor,
         fontSize,
         letterSpacing,
@@ -35,19 +36,20 @@ export default function save({ attributes }) {
             <style>
                 {`
                     @media only screen and (max-width: 1024px) {
-                        .responsive-span {
+                        .cdsfw_responsive {
                             padding: ${tab_padding.top}px ${tab_padding.right}px ${tab_padding.bottom}px ${tab_padding.left}px !important;
                         }
                     }
 
                     @media only screen and (max-width: 767px) {
-                        .responsive-span {
+                        .cdsfw_responsive {
                             padding: ${mobile_padding.top}px ${mobile_padding.right}px ${mobile_padding.bottom}px ${mobile_padding.left}px !important;
                         }
                     }
                 `}
             </style>
-            <span {...blockProps} className="responsive-span" style={{
+            <span {...blockProps} className="cdsfw_responsive" style={{
+                    display: display,
                     color: textColor,
                     fontSize: fontSize,
                     fontFamily: fontFamily,

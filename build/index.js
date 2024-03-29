@@ -21,6 +21,10 @@ const attributes = {
     type: "string",
     default: "jS F Y"
   },
+  display: {
+    type: "string",
+    default: "inline-block"
+  },
   textColor: {
     type: "string",
     default: ""
@@ -3192,6 +3196,7 @@ function Edit({
   const {
     blockID,
     dateFormat,
+    display,
     textColor,
     fontSize,
     letterSpacing,
@@ -3319,6 +3324,9 @@ function Edit({
       activeDevice: device
     });
   };
+
+  /** Default padding for desktop (using desktop_padding) */
+  const padding = `${desktop_padding.top}px ${desktop_padding.right}px ${desktop_padding.bottom}px ${desktop_padding.left}px`;
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.InspectorControls, {
     key: "controls"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
@@ -3398,6 +3406,19 @@ function Edit({
     }],
     onChange: value => setAttributes({
       dateFormat: value
+    })
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Display', 'current-date'),
+    value: display,
+    options: [{
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Inline Block', 'current-date'),
+      value: 'inline-block'
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Block', 'current-date'),
+      value: 'block'
+    }],
+    onChange: value => setAttributes({
+      display: value
     })
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Typography", "current-date"),
@@ -3605,10 +3626,24 @@ function Edit({
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: `dashicons ${paddingLink ? 'dashicons-admin-links' : 'dashicons-editor-unlink'} ${paddingLink ? 'is-checked' : ''}`,
     onClick: handlePaddingLinkToggle
-  })))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  })))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("style", null, `
+                    @media only screen and (max-width: 1024px) {
+                        .cdsfw_responsive {
+                            padding: ${tab_padding.top}px ${tab_padding.right}px ${tab_padding.bottom}px ${tab_padding.left}px !important;
+                        }
+                    }
+
+                    @media only screen and (max-width: 767px) {
+                        .cdsfw_responsive {
+                            padding: ${mobile_padding.top}px ${mobile_padding.right}px ${mobile_padding.bottom}px ${mobile_padding.left}px !important;
+                        }
+                    }
+                `), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "cdsfw_responsive",
     style: {
+      display: display,
       color: textColor,
       fontFamily: fontFamily,
       fontSize: fontSize,
@@ -3616,10 +3651,7 @@ function Edit({
       textTransform: textTransform,
       fontWeight: fontWeight,
       lineHeight: lineHeight + "px",
-      padding: `${activeDevice === 'desktop' ? desktop_padding.top : activeDevice === 'tab' ? tab_padding.top : mobile_padding.top}px 
-                            ${activeDevice === 'desktop' ? desktop_padding.right : activeDevice === 'tab' ? tab_padding.right : mobile_padding.right}px 
-                            ${activeDevice === 'desktop' ? desktop_padding.bottom : activeDevice === 'tab' ? tab_padding.bottom : mobile_padding.bottom}px 
-                            ${activeDevice === 'desktop' ? desktop_padding.left : activeDevice === 'tab' ? tab_padding.left : mobile_padding.left}px`
+      padding
     }
   }, currentDate)));
 }
@@ -3683,6 +3715,7 @@ function save({
   const {
     blockID,
     dateFormat,
+    display,
     textColor,
     fontSize,
     letterSpacing,
@@ -3705,20 +3738,21 @@ function save({
   const padding = `${desktop_padding.top}px ${desktop_padding.right}px ${desktop_padding.bottom}px ${desktop_padding.left}px`;
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("style", null, `
                     @media only screen and (max-width: 1024px) {
-                        .responsive-span {
+                        .cdsfw_responsive {
                             padding: ${tab_padding.top}px ${tab_padding.right}px ${tab_padding.bottom}px ${tab_padding.left}px !important;
                         }
                     }
 
                     @media only screen and (max-width: 767px) {
-                        .responsive-span {
+                        .cdsfw_responsive {
                             padding: ${mobile_padding.top}px ${mobile_padding.right}px ${mobile_padding.bottom}px ${mobile_padding.left}px !important;
                         }
                     }
                 `), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     ...blockProps,
-    className: "responsive-span",
+    className: "cdsfw_responsive",
     style: {
+      display: display,
       color: textColor,
       fontSize: fontSize,
       fontFamily: fontFamily,

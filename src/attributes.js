@@ -7,6 +7,10 @@ const attributes = {
         type: "string",
         default: "jS F Y"
     },
+    display: {
+        type: "string",
+        default: "inline-block"
+    },
     textColor: {
         type: "string",
         default: ""
