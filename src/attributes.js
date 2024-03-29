@@ -66,10 +66,41 @@ const attributes = {
             right: 0,
         },
     },
-    activeDevice: {
+    desktop_margin: {
+        type: "object", 
+        default: {
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+        },
+    },
+    tab_margin: {
+        type: "object", 
+        default: {
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+        },
+    },
+    mobile_margin: {
+        type: "object", 
+        default: {
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+        },
+    },
+    activePaddingDevice: {
         type: "string",
         default: "desktop"
-    }
+    },
+    activeMarginDevice: {
+        type: "string",
+        default: "desktop"
+    },
 };
 
 export default attributes;
