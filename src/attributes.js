@@ -101,6 +101,14 @@ const attributes = {
         type: "string",
         default: "desktop"
     },
+    paddingLink : {
+        type : "boolean",
+        default: true
+    },
+    marginLink : {
+        type : "boolean",
+        default: true
+    }
 };
 
 export default attributes;

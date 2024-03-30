@@ -35,13 +35,13 @@ export default function Edit({ attributes, setAttributes }) {
         tab_margin,
         mobile_margin,
         activePaddingDevice,
-        activeMarginDevice
+        activeMarginDevice,
+        paddingLink,
+        marginLink
     } = attributes;
 
     const blockProps = useBlockProps();
-    const [paddingLink, setPaddingLink] = useState(true);
     const [previousPadding, setPreviousPadding] = useState(desktop_padding);
-    const [marginLink, setMarginLink] = useState(true);
     const [previousMargin, setPreviousMargin] = useState(desktop_margin);
 
     /** Function to update all padding values */
@@ -169,10 +169,10 @@ export default function Edit({ attributes, setAttributes }) {
     /** Function to handle paddingLink toggle */
     const handlePaddingLinkToggle = () => {
         if (!paddingLink) {
-            /** If paddingLink is being turned off, restore previous padding values */
             setAttributes({ desktop_padding: previousPadding });
         }
-        setPaddingLink(!paddingLink);
+        /** setPaddingLink(!paddingLink) */
+        setAttributes({paddingLink: !paddingLink})
     };
 
     /** Function to handle marginLink toggle */
@@ -181,7 +181,8 @@ export default function Edit({ attributes, setAttributes }) {
             /** If marginLink is being turned off, restore previous margin values */
             setAttributes({ desktop_margin: previousMargin });
         }
-        setMarginLink(!marginLink);
+        /** setMarginLink(!marginLink); */
+        setAttributes({marginLink: !marginLink})
     };
     
     /** Update previousPadding state when padding changes */

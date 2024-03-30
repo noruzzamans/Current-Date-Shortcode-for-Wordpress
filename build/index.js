@@ -114,6 +114,14 @@ const attributes = {
   activeMarginDevice: {
     type: "string",
     default: "desktop"
+  },
+  paddingLink: {
+    type: "boolean",
+    default: true
+  },
+  marginLink: {
+    type: "boolean",
+    default: true
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (attributes);
@@ -3242,12 +3250,12 @@ function Edit({
     tab_margin,
     mobile_margin,
     activePaddingDevice,
-    activeMarginDevice
+    activeMarginDevice,
+    paddingLink,
+    marginLink
   } = attributes;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__.useBlockProps)();
-  const [paddingLink, setPaddingLink] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
   const [previousPadding, setPreviousPadding] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(desktop_padding);
-  const [marginLink, setMarginLink] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
   const [previousMargin, setPreviousMargin] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(desktop_margin);
 
   /** Function to update all padding values */
@@ -3403,12 +3411,14 @@ function Edit({
   /** Function to handle paddingLink toggle */
   const handlePaddingLinkToggle = () => {
     if (!paddingLink) {
-      /** If paddingLink is being turned off, restore previous padding values */
       setAttributes({
         desktop_padding: previousPadding
       });
     }
-    setPaddingLink(!paddingLink);
+    /** setPaddingLink(!paddingLink) */
+    setAttributes({
+      paddingLink: !paddingLink
+    });
   };
 
   /** Function to handle marginLink toggle */
@@ -3419,7 +3429,10 @@ function Edit({
         desktop_margin: previousMargin
       });
     }
-    setMarginLink(!marginLink);
+    /** setMarginLink(!marginLink); */
+    setAttributes({
+      marginLink: !marginLink
+    });
   };
 
   /** Update previousPadding state when padding changes */
