@@ -13,7 +13,7 @@
  * @package           Cdsfw_Current_Date
  *
  * @wordpress-plugin
- * Plugin Name:       Current Date
+ * Plugin Name:       Current Date Shortcode For WordPess
  * Plugin URI:        https://wordpress.org/plugins/current-date
  * Description:       Effortlessly display the current date with precision using a streamlined shortcode
  * Version:           1.0.0
