@@ -45,6 +45,9 @@ Need a specific date format? No problem! Pass a format attribute with the shortc
 
 This user-friendly plugin empowers you to seamlessly integrate dynamic dates into your WordPress content, enhancing both functionality and user experience.
 
+##CONTRIBUTE
+The full source code is available on [GitHub Repository](https://github.com/noruzzamanrubel/Current-Date-Shortcode-for-Wordpress). Feel free to contribute or report an issue.
+
 == Installation ==
 
 There is no prerequisites for installing **Current Date Shortcode For WordPess**. You can follow the steps below to complete the installation.
