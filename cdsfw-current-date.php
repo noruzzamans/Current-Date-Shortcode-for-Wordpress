@@ -18,7 +18,7 @@
  * Description:       Effortlessly display the current date with precision using a streamlined shortcode
  * Version:           1.0.0
  * Author:            Noruzzaman
- * Author URI:        https://github.com/noruzzamanrubel/
+ * Author URI:        https://github.com/noruzzamans
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       current-date
