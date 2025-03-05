@@ -254,7 +254,9 @@ export default function Edit({ attributes, setAttributes }) {
                             { label: __('d-m-Y', 'current-date'), value: 'd-m-Y' },
                             { label: __('Y-m-d', 'current-date'), value: 'Y-m-d' },
                             { label: __('Y/m/d', 'current-date'), value: 'Y/m/d' },
-                            { label: __('m/d/Y', 'current-date'), value: 'm/d/Y' }
+                            { label: __('m/d/Y', 'current-date'), value: 'm/d/Y' },
+                            { label: __('jS F', 'current-date'), value: 'jS F' },
+                            { label: __('jS. F', 'current-date'), value: 'jS. F' }
                         ]}
                         onChange={(value) => setAttributes({ dateFormat: value })}
                     />
