@@ -92,7 +92,7 @@ public function cdsfw_current_date_settings_page_callback() {
                 ?>
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-text"><?php echo date($format); ?></p>
+                        <p class="card-text"><?php echo date_i18n($format, current_time('timestamp')); ?></p>
                         <p class="shortcode">[current-date format='<?php echo $format; ?>']</p>
                     </div>
                 </div>

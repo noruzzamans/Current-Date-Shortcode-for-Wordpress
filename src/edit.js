@@ -1,6 +1,6 @@
 import { useState, useEffect } from "@wordpress/element";
 import { __ } from '@wordpress/i18n';
-import { dateI18n } from '@wordpress/date';
+import { gmdateI18n } from '@wordpress/date';
 import { 
     useBlockProps,
     InspectorControls,
@@ -207,7 +207,7 @@ export default function Edit({ attributes, setAttributes }) {
     }, [fontFamily]);
     
     /** Get current date based on selected format */
-    const currentDate = dateI18n(dateFormat);
+    const currentDate = gmdateI18n(dateFormat);
 
 
     /** Function to handle device click for padding */

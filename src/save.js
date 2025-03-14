@@ -1,5 +1,5 @@
 import { useBlockProps } from '@wordpress/block-editor';
-import { dateI18n } from '@wordpress/date';
+import { gmdateI18n } from '@wordpress/date';
 
 export default function save({ attributes }) {
     const { 
@@ -27,7 +27,7 @@ export default function save({ attributes }) {
     });
 
     /** Get current date based on selected format */
-    const currentDate = dateI18n(dateFormat);
+    const currentDate = gmdateI18n(dateFormat);
 
     // Default padding for desktop (using desktop_padding)
     const padding = `${desktop_padding.top}px ${desktop_padding.right}px ${desktop_padding.bottom}px ${desktop_padding.left}px`;
